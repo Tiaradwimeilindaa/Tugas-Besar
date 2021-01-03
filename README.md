@@ -1,22 +1,28 @@
 # Tugas-Besar
 codingan tugas besar Praktikum
+
 import csv
 import os
+import datetime
 
-nama_file = "data servis Virtual Komputer.csv"
+date = datetime.date.today()
 
+nama_file = "data servis elektronik.csv"
+
+data = ["tanggal,nama,jumlah,biaya,biaya_sementara"]
+#membuat varibel data dengan berisi tanggal,nama barang,jumlah,harga
+
+with open("data servis elektronik.csv","w",newline="") as file:
+    #mode w = menulis/menimpa data yg sudah ada
+    #newline fungsinya agar tidak ada spasi diantara data"nya
+        tulis = csv.writer(file,delimiter=",")
+        #variabel tulis yang berisi perintah untuk menulis di dalam file csv
+        #delimiter = pemisah antar data
+        tulis.writerow(data)
+        #writerow untuk memasukkan data dalam variabel ke csv dalam bentuk baris
 def blank_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-#1 : Membuat file data baru dalam format csv
-def buat_baru():
-    blank_screen() 
-    with open(nama_file, 'w', newline='') as csv_file: 
-        header = ["Tanggal","Nama Barang","Jumlah","Estimasi","Biaya Total"]
-        tulis = csv.writer(csv_file, delimiter=';')
-        tulis.writerow(header)
-    print("File Berhasil Dibuat")
-    kembali()
 
 #2 : Menambah atau menulis file data baru
 def tambahkan(): #fungsi untuk menambahkan data
@@ -26,7 +32,8 @@ def tambahkan(): #fungsi untuk menambahkan data
         print("TAMBAHKAN BARANG".center(90))
         print("SERVIS ELEKTRONIK DAN KOMPUTER".center(90))
         print("="*90)      
-        tanggal = input('Tanggal : ')
+        date = datetime.date.today()
+        tanggal = tanggal = date.strftime('%d-%m-%Y')
         nama = input('Nama Barang : ') 
         jumlah = int(input('Jumlah : ')) 
         biaya = int(input('Estimasi : Rp.')) 
@@ -40,6 +47,7 @@ def tambahkan(): #fungsi untuk menambahkan data
 #writerow untuk memasukkan data dalam variabel ke csv dalam bentuk baris
     print("Data sukses ditambahkan..")
     kembali() 
+
 
 #3 : Menampilkan data dari file sebelumnya
 def tampil_data():
@@ -92,7 +100,7 @@ def hapus():
         print("TIDAK ADA BARANG".center(90))
         kembali()
     number = int(input('Pilih nomer : '))
-#variabel number yang berisi untuk mau memilih nomer berapa
+#variabel number yang berisi untuk mau memilih nomer
     del barang[number]
     with open(nama_file, 'w', newline='') as csv_file:
         #dengan menggunakan mode w untuk menulis
@@ -123,7 +131,8 @@ def edit_data():
                 number += 1
                 print ("_"*90)
             number = int(input('Pilih nomer : '))
-            tanggal = input('\nTanggal : ')
+            date = datetime.date.today()
+            tanggal = tanggal = date.strftime('%d-%m-%Y')
             nama = input('Nama Barang : ') 
             jumlah = int(input('Jumlah : ')) 
             biaya = int(input('Estimasi : Rp.')) 
@@ -156,7 +165,6 @@ def beranda():
     print("="*72)
     print(''' 
     |99| Keluar
-    |1|  Buat daftar Servis [.csv] 
     |2|  Tambah data Servis
     |3|  Lihat data Servis
     |4|  Hapus data Servis (Jika sudah)
@@ -178,6 +186,8 @@ def beranda():
     else:
         kembali()
 
+
+    
 def kembali():
     input("\n Tekan enter untuk kembali ke beranda..")
     beranda()
